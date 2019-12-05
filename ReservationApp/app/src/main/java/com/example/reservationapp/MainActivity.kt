@@ -1,43 +1,30 @@
 package com.example.reservationapp
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.reservationapp.DbStructure.UserInfo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    val mAuth = FirebaseAuth.getInstance()
+    var user = mAuth.currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button : ImageButton = findViewById(R.id.newActivity)
-        button.setBackgroundResource(R.drawable.hand)
-
-        var button_confirm : Button = findViewById(R.id.button_confirm)
-
-        button.setOnClickListener {
-            val nextIntent : Intent = Intent(this, SubActivity::class.java)
-            startActivity(nextIntent)
-        }
-
-        button_confirm.setOnClickListener {
-            val nextIntent : Intent = Intent(this, Activity_confirm::class.java)
-            startActivity(nextIntent)
-        }
-      
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
             val channelId = getString(R.string.default_notification_channel_id)
@@ -46,15 +33,6 @@ class MainActivity : AppCompatActivity() {
             notificationManager?.createNotificationChannel(NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_LOW))
         }
-
-        // If a notification message is tapped, any data accompanying the notification
-        // message is available in the intent extras. In this sample the launcher
-        // intent is fired when the notification is tapped, so any accompanying data would
-        // be handled here. If you want a different intent fired, set the click_action
-        // field of the notification message to the desired intent. The launcher intent
-        // is used when no click_action is specified.
-        //
-        // Handle possible data accompanying notification message.
         // [START handle_data_extras]
         intent.extras?.let {
             for (key in it.keySet()) {
@@ -64,47 +42,85 @@ class MainActivity : AppCompatActivity() {
         }
         // [END handle_data_extras]
 
-        subscribeButton.setOnClickListener {
-            Log.d(TAG, "Subscribing to reservation topic")
-            // [START subscribe_topics]
-            FirebaseMessaging.getInstance().subscribeToTopic("reservation")
-                .addOnCompleteListener { task ->
-                    var msg = getString(R.string.msg_subscribed)
-                    if (!task.isSuccessful) {
-                        msg = getString(R.string.msg_subscribe_failed)
-                    }
-                    Log.d(TAG, msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "Subscribing to reservation topic")
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic("reservation")
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.msg_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.msg_subscribe_failed)
                 }
-            // [END subscribe_topics]
+                Log.d(TAG, msg)
+                // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+        // [END subscribe_topics]
+
+        // Get token
+        // [START retrieve_current_token]
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d(TAG, msg)
+                // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            })
+        // [END retrieve_current_token]
+
+        newActivity.setOnClickListener{
+            user = mAuth.currentUser
+            if (user != null) {
+                val intent = Intent(this, QrReservationActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(baseContext, "로그인이 필요한 기능입니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        logTokenButton.setOnClickListener {
-            // Get token
-            // [START retrieve_current_token]
-            FirebaseInstanceId.getInstance().instanceId
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w(TAG, "getInstanceId failed", task.exception)
-                        return@OnCompleteListener
-                    }
-
-                    // Get new Instance ID token
-                    val token = task.result?.token
-
-                    // Log and toast
-                    val msg = getString(R.string.msg_token_fmt, token)
-                    Log.d(TAG, msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                })
-            // [END retrieve_current_token]
+        button_login.setOnClickListener {
+            user = mAuth.currentUser
+            if (user != null) {
+                FirebaseAuth.getInstance().signOut()
+                textView_showEmail.text = "사용자 정보 없음"
+                button_login.text = "로그인"
+                Toast.makeText(baseContext, "로그아웃 하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
-        Toast.makeText(this, "See README for setup instructions", Toast.LENGTH_SHORT).show()
     }
 
-    companion object {
+    override fun onResume() {
+        super.onResume()
 
+        user = mAuth.currentUser
+        var id : String?
+
+        if (user != null) {
+            button_login.text = "로그아웃"
+            id = user!!.email;
+            textView_showEmail.text = id
+        }
+        else{
+            button_login.text = "로그인"
+            textView_showEmail.text = "사용자 정보 없음"
+        }
+    }
+
+
+    companion object {
         private const val TAG = "MainActivity"
     }
 }
+
