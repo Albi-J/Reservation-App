@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/textView_userIDedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                android:text="User ID"/>
+
+        <EditText
+                android:id="@+id/editText_resName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_userIDedit"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                android:hint="Restaurant Name"
+                android:text="Blue Pot in KAU"/>
+
+        <TextView
+                android:id="@+id/textView_userID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:text="Text View User ID"
+                android:textSize="10dp"/>
+
+        <TextView
+                android:id="@+id/textView_resName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_userID"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:text="Text View Restaurant Name"
+                android:textSize="10dp"/>
+
+        <TextView
+                android:id="@+id/textView_resTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_resName"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:text="Text View Reservation Time"
+                android:textSize="10dp"/>
+
+        <TextView
+                android:id="@+id/textView_waitNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_resTime"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:text="Text View Waiting Number"
+                android:textSize="10dp"/>
+
+        <Button
+                android:id="@+id/button_DB_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:text="Submit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

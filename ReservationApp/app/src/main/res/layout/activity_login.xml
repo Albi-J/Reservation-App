@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/textView_loginActTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="30dp"
+
+            android:text="로그인"
+            android:textSize="15dp"/>
+
+    <TextView
+            android:id="@+id/textView_loginActID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView_loginActTitle"
+            app:layout_constraintLeft_toLeftOf="@id/editText_loginActID"
+            android:layout_marginTop="30dp"
+
+            android:text="이메일"
+            android:textSize="10dp"/>
+
+    <EditText
+            android:id="@+id/editText_loginActID"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView_loginActID"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"/>
+
+    <TextView
+            android:id="@+id/textView_loginActPW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/editText_loginActID"
+            app:layout_constraintLeft_toLeftOf="@id/editText_loginActPW"
+            android:layout_marginTop="30dp"
+
+            android:text="비밀번호"
+            android:textSize="10dp"/>
+
+    <EditText
+            android:id="@+id/editText_loginActPW"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView_loginActPW"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            android:hint="Password"
+            android:inputType="textPassword"/>
+
+    <Button
+            android:id="@+id/button_loginActLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/editText_loginActPW"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="30dp"
+
+            android:text="로그인"/>
+
+    <Button
+            android:id="@+id/button_loginActSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/textView_loginActSpace"
+            app:layout_constraintRight_toLeftOf="@id/textView_loginActSpace"
+
+            android:text="회원가입"
+            android:textSize="10dp"/>
+
+    <Button
+        android:id="@+id/button_loginActNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/button_loginActSignUp"
+        app:layout_constraintRight_toLeftOf="@id/textView_loginActSpace"
+
+        android:text="알림 테스트"
+        android:textSize="10dp"/>
+
+    <TextView
+            android:id="@+id/textView_loginActSpace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_loginActLogin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="30dp"
+
+            android:text=" | "
+            android:textSize="10dp"/>
+
+    <Button
+        android:id="@+id/button_loginActForgotPW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/textView_loginActSpace"
+        app:layout_constraintLeft_toRightOf="@id/textView_loginActSpace"
+
+        android:text="DB 관리자"
+        android:textSize="10dp"/>
+
+    <Button
+            android:id="@+id/button_loginActForgotPW2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_loginActForgotPW"
+            app:layout_constraintLeft_toRightOf="@id/textView_loginActSpace"
+
+            android:text="DB 관리자2"
+            android:textSize="10dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
